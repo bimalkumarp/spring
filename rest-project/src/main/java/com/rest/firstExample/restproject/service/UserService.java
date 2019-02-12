@@ -1,16 +1,14 @@
 package com.rest.firstExample.restproject.service;
 
-import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.rest.firstExample.restproject.dao.UserDao;
 import com.rest.firstExample.restproject.model.User;
@@ -36,6 +34,14 @@ public class UserService {
 		return user;
 	}
 	
+	@DeleteMapping("/Users/{id}")
+	public void deleteUser(@PathVariable int id){
+		User user=dao.deleteById(id);
+		
+		if(user==null){
+			throw new userException("id-" +id);
+		}
+	}
 	
 
 	@PostMapping("/Users")
@@ -49,5 +55,11 @@ public class UserService {
 		return "Sucessful adding user with id :" +users.getId();
 			
 	}
+	
+	/*@GetMapping("/Users/{id}/posts")
+	public List<User> retrieveAllPostUsers(@){
+		return dao.countUpdate(user);
+			
+	}*/
 
 }
