@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rest.firstExample.restproject.dao.UserDao;
+import com.rest.firstExample.restproject.model.Post;
 import com.rest.firstExample.restproject.model.User;
 
 @RestController
@@ -19,32 +20,32 @@ public class UserService {
 	@Autowired
 	UserDao dao;
 	
-	@GetMapping("/Users")
+	@GetMapping("/users")
 	public List<User> getAllUsers(){
 		return dao.findAll();
 	}
 	
-	@GetMapping("/Users/{id}")
+	@GetMapping("/users/{id}")
 	public User getSingleUser(@PathVariable int id){
 		User user= dao.findOne(id);
 		
 		if(user==null){
-			throw new userException("id-"+id);
+			throw new UserNotFoundException("id-"+id);
 		}
 		return user;
 	}
 	
-	@DeleteMapping("/Users/{id}")
+	@DeleteMapping("/users/{id}")
 	public void deleteUser(@PathVariable int id){
 		User user=dao.deleteById(id);
 		
 		if(user==null){
-			throw new userException("id-" +id);
+			throw new UserNotFoundException("id-" +id);
 		}
 	}
 	
 
-	@PostMapping("/Users")
+	@PostMapping("/users")
 	public String createUser(@RequestBody User user){
 		User users= dao.save(user);
 		
@@ -56,10 +57,27 @@ public class UserService {
 			
 	}
 	
-	/*@GetMapping("/Users/{id}/posts")
-	public List<User> retrieveAllPostUsers(@){
-		return dao.countUpdate(user);
+	
+	@PostMapping("/users/{id}/posts")
+	public void createPost(@PathVariable int id, @RequestBody Post post){
+		
+		
+		 dao.createPost(id,post);
+		
+		 
 			
-	}*/
-
+	}
+	
+	
+	@GetMapping("/users/{id}/posts")
+	public List<Post> getPosts(@PathVariable int id){
+		
+		
+		return dao.getPosts(id);
+		
+		 
+			
+	}
+	
+	
 }

@@ -1,9 +1,13 @@
 package com.rest.firstExample.restproject.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
 	private int id;
 	private String name;
 	private int salary;
+	private List<Post> posts;
 	
 	public User(){
 		
@@ -43,6 +47,17 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", salary=" + salary + "]";
+	}
+
+	public List<Post> getPosts() {
+		if(posts==null){
+			posts=new ArrayList<Post>();
+		}
+      return posts;
+	}
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
 	}
 	
 	

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.rest.firstExample.restproject.service.userException;
+import com.rest.firstExample.restproject.service.UserNotFoundException;
 
 
 @ControllerAdvice
@@ -26,7 +26,7 @@ public class CustomisedResponseEntityExceptionHandler extends ResponseEntityExce
 		
 	}
 		
-	@ExceptionHandler(userException.class)
+	@ExceptionHandler(UserNotFoundException.class)
 	public final ResponseEntity<Object> handleUserDefinedExceptions(Exception ex, WebRequest request) 
 			throws Exception {
 		ExceptionResponse response =new ExceptionResponse(new Date(), ex.getMessage(), 
